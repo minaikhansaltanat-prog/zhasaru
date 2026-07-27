@@ -23,6 +23,12 @@
   --red-400: #d8434a;
   --red-100: #fbe6e5;
 
+  /* 2GIS brand green — used only for the 2GIS link-out button, so it reads
+     as "this opens 2GIS", distinct from the site's own forest green. */
+  --gis-green-500: #2dbe64;
+  --gis-green-700: #149247;
+  --gis-green-900: #0c6b34;
+
   --cream:      #fbf6ee;
   --cream-dark: #f2e9d9;
   --paper:      #fffdf8;
@@ -825,8 +831,14 @@ body { padding-top: var(--header-h); }
 }
 .carousel-tab svg { width: 16px; height: 16px; }
 .carousel-tab.active, .carousel-tab:hover { background: var(--green-800); border-color: var(--green-800); color: var(--white); }
-.carousel-tab.tab-2gis { border-color: var(--red-500); color: var(--red-600); }
-.carousel-tab.tab-2gis:hover { background: var(--red-600); border-color: var(--red-600); color: var(--white); }
+@media (max-width: 480px) {
+  /* Keep Видео / Жазбаша / Аудио on a single row instead of stacking. */
+  .carousel-tabs { flex-wrap: nowrap; gap: 6px; }
+  .carousel-tab { padding: 9px 12px; font-size: 12px; gap: 5px; flex: 1 1 0; justify-content: center; white-space: nowrap; }
+  .carousel-tab svg { width: 14px; height: 14px; flex-shrink: 0; }
+}
+.carousel-tab.tab-2gis { border-color: var(--gis-green-500); color: var(--gis-green-900); }
+.carousel-tab.tab-2gis:hover { background: var(--gis-green-500); border-color: var(--gis-green-500); color: var(--white); }
 
 .carousel-wrap { position: relative; }
 .carousel-viewport { overflow: hidden; }
@@ -913,15 +925,15 @@ body { padding-top: var(--header-h); }
 
 .gis-card {
   display: inline-flex; align-items: center; gap: 16px;
-  background: linear-gradient(155deg, var(--red-500), var(--red-800));
+  background: linear-gradient(155deg, var(--gis-green-500), var(--gis-green-900));
   color: var(--white);
   border-radius: var(--radius-lg);
   padding: 22px 30px;
-  box-shadow: var(--shadow-red);
+  box-shadow: 0 10px 22px rgba(45, 190, 100, 0.30), 0 3px 8px rgba(45, 190, 100, 0.22);
   transition: transform 0.4s var(--ease-spring), box-shadow 0.4s var(--ease-out);
   margin: 0 auto;
 }
-.gis-card:hover { transform: translateY(-5px) scale(1.015); box-shadow: 0 20px 40px rgba(191,38,50,0.36); }
+.gis-card:hover { transform: translateY(-5px) scale(1.015); box-shadow: 0 20px 40px rgba(45, 190, 100, 0.38); }
 .gis-card .gis-ico { width: 48px; height: 48px; border-radius: 50%; background: rgba(255,255,255,0.18); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .gis-card .gis-ico svg { width: 24px; height: 24px; }
 .gis-card strong { display: block; font-size: 16px; }
