@@ -357,6 +357,13 @@ body { padding-top: var(--header-h); }
   position: absolute; inset: 0;
   width: 100%; height: 100%;
   object-fit: cover;
+  /* Source clip is a square (1080x1080) close-up portrait with the head
+     starting almost at the very top edge. On wide/landscape viewports
+     object-fit:cover crops vertically — anchoring to the top keeps the
+     face fully in frame at any width, trading off some of the lower
+     torso instead. On tall/portrait (mobile) viewports the crop happens
+     horizontally, so this has no effect there. */
+  object-position: center top;
 }
 .hero-scrim {
   position: absolute; inset: 0;
