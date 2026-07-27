@@ -193,11 +193,20 @@
   /* Click-to-play media (gallery + video testimonials).                  */
   /* Delegated on document so carousel-cloned cards work too.             */
   /* ------------------------------------------------------------------ */
+  function promoteSrc(video) {
+    if (video.dataset && video.dataset.src) {
+      video.src = video.dataset.src;
+      delete video.dataset.src;
+      video.load();
+    }
+  }
+
   document.addEventListener('click', function (e) {
     var wrap = e.target.closest('.t-video-frame, .g-card');
     if (!wrap) return;
     var video = wrap.querySelector('video');
     if (!video) return;
+    promoteSrc(video);
     if (video.paused) {
       document.querySelectorAll('video').forEach(function (v) {
         if (v !== video && v !== heroVideo) { v.pause(); v.closest('.t-video-frame, .g-card')?.classList.remove('is-playing'); }
@@ -259,13 +268,29 @@
     var originalChildren = Array.prototype.slice.call(track.children);
     if (!originalChildren.length) return;
 
-    // Duplicate content once for a seamless loop. Cloned <video> elements
-    // don't inherit the decoded-frame state, so explicitly load() them.
+    // Duplicate content once for a seamless loop.
     originalChildren.forEach(function (child) {
-      var clone = child.cloneNode(true);
-      track.appendChild(clone);
-      clone.querySelectorAll('video').forEach(function (v) { v.load(); });
+      track.appendChild(child.cloneNode(true));
     });
+
+    // Videos in these carousels use data-src (not src) so the browser never
+    // fetches them up front — with carousels holding dozens of clips this
+    // avoids dozens of simultaneous network requests on page load. Only
+    // promote data-src -> src once a card actually scrolls near the visible
+    // window (or gets clicked, handled separately in the play handler).
+    if ('IntersectionObserver' in window) {
+      var lazyIO = new IntersectionObserver(
+        function (entries) {
+          entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            promoteSrc(entry.target);
+            lazyIO.unobserve(entry.target);
+          });
+        },
+        { root: viewport, rootMargin: '600px', threshold: 0.01 }
+      );
+      track.querySelectorAll('video[data-src]').forEach(function (v) { lazyIO.observe(v); });
+    }
 
     var speed = parseFloat(root.getAttribute('data-speed') || '0.45');
     var autoplay = root.getAttribute('data-autoplay') !== 'false';
