@@ -1,0 +1,25 @@
+node_modules/
+temporary screenshots/
+*.log
+.claude/
+
+# Raw / reference materials not needed to run the site (kept locally only;
+# the subset actually used by the site already lives under assets/).
+SS/
+Photo/
+44/
+11/
+ava/
+
+# Leftover files from an unrelated earlier project that shares this folder —
+# not part of the Zhas Aru ZR site.
+SKILL.md
+SKILL вв.md
+core.py
+core.cpython-314.pyc
+design_system.py
+design_system.cpython-314.pyc
+search.py
+search.cpython-314.pyc
+plugin.json
+data/
