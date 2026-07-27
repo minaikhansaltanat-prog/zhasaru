@@ -25,14 +25,14 @@ const CITIES = [
   { key: 'aktobe', file: 'aktobe.html', titleKk: 'Ақтөбе', titleRu: 'Актобе' },
 ];
 
-const ALMATY_CARD = `<a class="branch-card is-active" href="/index.html" data-city="almaty">
+const ALMATY_CARD = `<a class="branch-card is-active" href="index.html" data-city="almaty">
         <span class="b-pin" data-i18n="branch.current">Сіз осындасыз</span>
         <span class="b-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
         <span class="b-city" data-i18n="branch.almaty">Алматы</span>
         <span class="b-status" data-i18n="branch.almaty.s">Ағымдағы бет</span>
       </a>`;
 
-const ALMATY_CARD_INACTIVE = `<a class="branch-card" href="/index.html" data-city="almaty">
+const ALMATY_CARD_INACTIVE = `<a class="branch-card" href="index.html" data-city="almaty">
         <span class="b-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
         <span class="b-city" data-i18n="branch.almaty">Алматы</span>
         <span class="b-status" data-i18n="branch.live">Жұмыс істейді</span>
@@ -65,7 +65,7 @@ for (const city of CITIES) {
   // Mark this city's own card as active + "you are here", keep its
   // existing "coming soon" status line underneath the badge.
   const cardRe = new RegExp(
-    `<a class="branch-card" href="/branches/${city.file}" data-city="${city.key}">\\s*<span class="b-icon">[\\s\\S]*?<\\/span>\\s*<span class="b-city"[^>]*>[\\s\\S]*?<\\/span>\\s*<span class="b-status"[^>]*>[\\s\\S]*?<\\/span>\\s*<\\/a>`
+    `<a class="branch-card" href="branches/${city.file}" data-city="${city.key}">\\s*<span class="b-icon">[\\s\\S]*?<\\/span>\\s*<span class="b-city"[^>]*>[\\s\\S]*?<\\/span>\\s*<span class="b-status"[^>]*>[\\s\\S]*?<\\/span>\\s*<\\/a>`
   );
   out = out.replace(cardRe, (match) => {
     const withActive = match.replace('class="branch-card"', 'class="branch-card is-active"');
@@ -93,6 +93,14 @@ for (const city of CITIES) {
         <span style="color:var(--ink-soft);font-weight:700;" data-i18n="map.soon">Карта жақында қосылады</span>
       </div>`
   );
+
+  // index.html's paths are relative to the project root. This file lives one
+  // level deeper (branches/<file>.html), so: assets/* and index.html need a
+  // "../" prefix, and sibling branch links ("branches/x.html") just become
+  // "x.html". Order matters — do the more specific replacements first.
+  out = out.replaceAll('="branches/', '="');
+  out = out.replaceAll('="assets/', '="../assets/');
+  out = out.replaceAll('="index.html"', '="../index.html"');
 
   const outDir = path.join(__dirname, 'branches');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
