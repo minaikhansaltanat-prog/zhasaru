@@ -110,13 +110,17 @@
   /* ------------------------------------------------------------------ */
   var heroVideo = document.querySelector('.hero-media video');
   var soundToggle = document.querySelector('.sound-toggle');
+  // The hero clip is meant to play through exactly once per visit (voice-over
+  // included) and then simply hold on its last frame — never loop or restart.
+  var heroEnded = false;
 
   function tryUnmutedPlay() {
-    if (!heroVideo) return;
+    if (!heroVideo || heroEnded) return;
     heroVideo.muted = false;
     var p = heroVideo.play();
     if (p && p.catch) {
       p.catch(function () {
+        if (heroEnded) return;
         heroVideo.muted = true;
         heroVideo.play().catch(function () {});
         if (soundToggle) soundToggle.classList.add('is-muted');
@@ -128,6 +132,10 @@
   if (heroVideo) {
     heroVideo.muted = true;
     heroVideo.play().catch(function () {});
+    heroVideo.addEventListener('ended', function () {
+      heroEnded = true;
+      if (soundToggle) soundToggle.style.display = 'none';
+    });
     window.addEventListener('load', tryUnmutedPlay);
     var unmuteOnce = function () {
       tryUnmutedPlay();
@@ -139,7 +147,7 @@
   }
   if (soundToggle) {
     soundToggle.addEventListener('click', function () {
-      if (!heroVideo) return;
+      if (!heroVideo || heroEnded) return;
       if (heroVideo.muted) {
         tryUnmutedPlay();
       } else {
