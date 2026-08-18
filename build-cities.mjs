@@ -17,11 +17,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const template = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
 
 const CITIES = [
-  // custom: true = has real per-city content now (own staff photo, etc.) —
-  // skipped here so re-running this script never overwrites it. Edit
-  // branches/<city>.html directly for further changes to that page.
-  { key: 'astana', file: 'astana.html', titleKk: 'Астана', titleRu: 'Астана', custom: true },
-  { key: 'oskemen', file: 'oskemen.html', titleKk: 'Өскемен', titleRu: 'Усть-Каменогорск' },
+  // custom: true = has real per-city content that index.html's template
+  // does not (yet) cover — skipped here so re-running this script never
+  // overwrites it. Edit branches/<city>.html directly for further changes.
+  // Astana/Shymkent/Kyzylorda no longer need this: their real staff photos
+  // now live in the shared Masters section in index.html itself, so a
+  // normal regeneration already gives them the right content.
+  { key: 'astana', file: 'astana.html', titleKk: 'Астана', titleRu: 'Астана' },
+  { key: 'kyzylorda', file: 'kyzylorda.html', titleKk: 'Қызылорда', titleRu: 'Кызылорда' },
   { key: 'shymkent', file: 'shymkent.html', titleKk: 'Шымкент', titleRu: 'Шымкент' },
   { key: 'aktau', file: 'aktau.html', titleKk: 'Ақтау', titleRu: 'Актау' },
   { key: 'atyrau', file: 'atyrau.html', titleKk: 'Атырау', titleRu: 'Атырау' },

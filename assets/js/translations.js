@@ -26,7 +26,7 @@ window.ZAZ_I18N = {
     "branch.sub": "Қаланы таңдап, сол филиалдың мекенжайын, жұмыс уақытын және байланыс деректерін көріңіз.",
     "branch.almaty": "Алматы", "branch.almaty.s": "Ағымдағы бет",
     "branch.astana": "Астана", "branch.astana.s": "Жақында қосылады",
-    "branch.oskemen": "Өскемен", "branch.oskemen.s": "Жақында қосылады",
+    "branch.kyzylorda": "Қызылорда", "branch.kyzylorda.s": "Жақында қосылады",
     "branch.shymkent": "Шымкент", "branch.shymkent.s": "Жақында қосылады",
     "branch.aktau": "Ақтау", "branch.aktau.s": "Жақында қосылады",
     "branch.atyrau": "Атырау", "branch.atyrau.s": "Жақында қосылады",
@@ -122,6 +122,7 @@ window.ZAZ_I18N = {
     "masters.sub": "Әр маман — сертификатталған және тұрақты біліктілікті арттырудан өтеді.",
     "masters.role1": "Бас косметолог", "masters.role2": "Аппараттық косметолог", "masters.role3": "Курс жаттықтырушысы", "masters.role4": "Косметолог-эстетист",
     "masters.exp": "жыл тәжірибе",
+    "masters.shymkentName": "Шымкент маманы",
 
     "testi.eyebrow": "Әлеуметтік дәлел", "testi.title": "Клиенттер пікірлері",
     "testi.sub": "Видео, жазбаша және аудио пікірлер — нәтижеге сеніміңіз артады.",
@@ -190,7 +191,7 @@ window.ZAZ_I18N = {
     "branch.sub": "Выберите город, чтобы увидеть адрес, часы работы и контакты филиала.",
     "branch.almaty": "Алматы", "branch.almaty.s": "Текущая страница",
     "branch.astana": "Астана", "branch.astana.s": "Скоро откроется",
-    "branch.oskemen": "Усть-Каменогорск", "branch.oskemen.s": "Скоро откроется",
+    "branch.kyzylorda": "Кызылорда", "branch.kyzylorda.s": "Скоро откроется",
     "branch.shymkent": "Шымкент", "branch.shymkent.s": "Скоро откроется",
     "branch.aktau": "Актау", "branch.aktau.s": "Скоро откроется",
     "branch.atyrau": "Атырау", "branch.atyrau.s": "Скоро откроется",
@@ -286,6 +287,7 @@ window.ZAZ_I18N = {
     "masters.sub": "Каждый специалист сертифицирован и регулярно повышает квалификацию.",
     "masters.role1": "Главный косметолог", "masters.role2": "Аппаратный косметолог", "masters.role3": "Тренер курса", "masters.role4": "Косметолог-эстетист",
     "masters.exp": "лет опыта",
+    "masters.shymkentName": "Специалист в Шымкенте",
 
     "testi.eyebrow": "Социальное доказательство", "testi.title": "Отзывы клиентов",
     "testi.sub": "Видео, письменные и аудио отзывы — для вашей уверенности в результате.",
