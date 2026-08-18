@@ -23,9 +23,15 @@ const CITIES = [
   // Astana/Shymkent/Kyzylorda no longer need this: their real staff photos
   // now live in the shared Masters section in index.html itself, so a
   // normal regeneration already gives them the right content.
-  { key: 'astana', file: 'astana.html', titleKk: 'Астана', titleRu: 'Астана' },
-  { key: 'kyzylorda', file: 'kyzylorda.html', titleKk: 'Қызылорда', titleRu: 'Кызылорда' },
-  { key: 'shymkent', file: 'shymkent.html', titleKk: 'Шымкент', titleRu: 'Шымкент' },
+  // aboutPhoto: swaps the "Біз туралы" (About) section portrait for that
+  // city's own specialist instead of the company founder — only set once a
+  // city has a real photo of its own.
+  { key: 'astana', file: 'astana.html', titleKk: 'Астана', titleRu: 'Астана',
+    aboutPhoto: { src: 'assets/img/masters/gulmira-astana.jpg', alt: 'Гульмира' } },
+  { key: 'kyzylorda', file: 'kyzylorda.html', titleKk: 'Қызылорда', titleRu: 'Кызылорда',
+    aboutPhoto: { src: 'assets/img/masters/kuralai-kyzylorda.jpg', alt: 'Қуралай' } },
+  { key: 'shymkent', file: 'shymkent.html', titleKk: 'Шымкент', titleRu: 'Шымкент',
+    aboutPhoto: { src: 'assets/img/masters/shymkent-specialist.jpg', alt: 'Шымкент маманы' } },
   { key: 'aktau', file: 'aktau.html', titleKk: 'Ақтау', titleRu: 'Актау' },
   { key: 'atyrau', file: 'atyrau.html', titleKk: 'Атырау', titleRu: 'Атырау' },
   { key: 'aktobe', file: 'aktobe.html', titleKk: 'Ақтөбе', titleRu: 'Актобе' },
@@ -47,6 +53,8 @@ const ALMATY_CARD_INACTIVE = `<a class="branch-card" href="index.html" data-city
 const HERO_BLOCK = `<span class="hero-eyebrow"><span class="dot"></span><span data-i18n="hero.eyebrow">7 филиал · Қазақстан</span></span>
     <h1 class="hero-title" data-i18n="hero.title" data-reveal>Сұлулығыңызға <em>сенім</em> артыңыз</h1>
     <p class="hero-sub" data-i18n="hero.sub" data-reveal>Zhas Aru ZR — бет күтімі мен инесіз аппараттық косметологияға арналған премиум салон желісі, сонымен қатар косметологтарға арналған авторлық оқу бағдарламасы.</p>`;
+
+const ABOUT_IMG = `<img src="assets/img/owner.jpg" alt="Zhas Aru ZR негізін қалаушы" loading="lazy">`;
 
 const MAP_BLOCK = `<div class="map-embed">
         <iframe src="https://maps.google.com/maps?q=%D0%90%D0%BB%D0%BC%D0%B0%D1%82%D1%8B%2C%20%D0%90%D2%9B%D1%81%D0%B0%D0%B9%201%2C%2011%2F7&t=&z=15&ie=UTF8&iwloc=&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Zhas Aru ZR — Алматы картасы"></iframe>
@@ -90,6 +98,14 @@ for (const city of CITIES) {
     <h1 class="hero-title" data-reveal>Zhas Aru ZR — ${city.titleKk} <em data-i18n="soon.title">жақында ашылады</em></h1>
     <p class="hero-sub" data-i18n="soon.sub" data-reveal>Бұл филиал жақында ашылады. Толық ақпарат алу үшін бізге хабарласыңыз немесе WhatsApp арқылы жазыңыз.</p>`;
   out = out.replace(HERO_BLOCK, heroReplacement);
+
+  // About section portrait: this city's own specialist instead of the founder.
+  if (city.aboutPhoto) {
+    out = out.replace(
+      ABOUT_IMG,
+      `<img src="${city.aboutPhoto.src}" alt="${city.aboutPhoto.alt}" loading="lazy">`
+    );
+  }
 
   // Contact card + footer + mobile drawer: generic address label, "coming soon" value.
   out = out.replaceAll('data-i18n="contact.addressT">Мекенжай (Алматы)', 'data-i18n="contact.addressGeneric">Мекенжай');
