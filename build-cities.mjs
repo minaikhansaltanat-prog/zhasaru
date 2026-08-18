@@ -17,7 +17,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const template = fs.readFileSync(path.join(__dirname, 'index.html'), 'utf8');
 
 const CITIES = [
-  { key: 'astana', file: 'astana.html', titleKk: 'Астана', titleRu: 'Астана' },
+  // custom: true = has real per-city content now (own staff photo, etc.) —
+  // skipped here so re-running this script never overwrites it. Edit
+  // branches/<city>.html directly for further changes to that page.
+  { key: 'astana', file: 'astana.html', titleKk: 'Астана', titleRu: 'Астана', custom: true },
   { key: 'oskemen', file: 'oskemen.html', titleKk: 'Өскемен', titleRu: 'Усть-Каменогорск' },
   { key: 'shymkent', file: 'shymkent.html', titleKk: 'Шымкент', titleRu: 'Шымкент' },
   { key: 'aktau', file: 'aktau.html', titleKk: 'Ақтау', titleRu: 'Актау' },
@@ -47,6 +50,10 @@ const MAP_BLOCK = `<div class="map-embed">
       </div>`;
 
 for (const city of CITIES) {
+  if (city.custom) {
+    console.log('Skipped branches/' + city.file + ' (custom: true — has real content, edit it directly)');
+    continue;
+  }
   let out = template;
 
   // <title> + meta description
